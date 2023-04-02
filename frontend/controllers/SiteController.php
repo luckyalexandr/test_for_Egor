@@ -111,6 +111,30 @@ class SiteController extends Controller
     }
 
     /**
+     * Displays notifications page.
+     *
+     * @return string|Response
+     * @throws \Exception
+     */
+    public function actionNotifications()
+    {
+        $form = new NotificationsForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->notifications->request($form);
+                Yii::$app->session->setFlash('success', 'Success <br>' . $this->notifications->request($form));
+            } catch (\Exception $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', 'There was an error sending your request.');
+            }
+            return $this->refresh();
+        }
+        return $this->render('notifications', [
+            'model' => $form,
+        ]);
+    }
+
+    /**
      * Displays content page.
      *
      * @return string|Response
