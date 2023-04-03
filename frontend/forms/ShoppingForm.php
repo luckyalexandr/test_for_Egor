@@ -15,7 +15,7 @@ class ShoppingForm extends CompositeForm
 
     public function __construct($config = [])
     {
-        $this->header = new HeaderForm();
+        $this->header = new HeaderForm(['scenario' => HeaderForm::SCENARIO_FREE_IP]);
         parent::__construct($config);
     }
 

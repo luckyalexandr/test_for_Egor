@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use frontend\forms\BookingForm;
 use frontend\forms\ContentForm;
+use frontend\forms\GeographyForm;
 use frontend\forms\ManageBookingForm;
 use frontend\forms\NotificationsForm;
 use frontend\forms\ShoppingForm;
@@ -11,6 +12,7 @@ use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use frontend\services\BookingService;
 use frontend\services\ContentService;
+use frontend\services\GeographyService;
 use frontend\services\ManageBookingService;
 use frontend\services\NotificationsService;
 use frontend\services\ShoppingService;
@@ -37,6 +39,7 @@ class SiteController extends Controller
     private $manage;
     private $booking;
     private $shopping;
+    private $geography;
 
     public function __construct($id, $module,
                                 ContentService $content,
@@ -44,6 +47,7 @@ class SiteController extends Controller
                                 ManageBookingService $manage,
                                 BookingService $booking,
                                 ShoppingService $shopping,
+                                GeographyService $geography,
                                 $config = [])
     {
         parent::__construct($id, $module, $config);
@@ -52,6 +56,7 @@ class SiteController extends Controller
         $this->manage = $manage;
         $this->booking = $booking;
         $this->shopping = $shopping;
+        $this->geography = $geography;
     }
 
     /**
@@ -193,6 +198,30 @@ class SiteController extends Controller
             return $this->refresh();
         }
         return $this->render('shopping', [
+            'model' => $form,
+        ]);
+    }
+
+    /**
+     * Displays geography page.
+     *
+     * @return string|Response
+     * @throws \Exception
+     */
+    public function actionGeography()
+    {
+        $form = new GeographyForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->geography->request($form);
+                Yii::$app->session->setFlash('success', 'Success <br>' . $this->geography->request($form));
+            } catch (\Exception $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', 'There was an error sending your request.');
+            }
+            return $this->refresh();
+        }
+        return $this->render('geography', [
             'model' => $form,
         ]);
     }

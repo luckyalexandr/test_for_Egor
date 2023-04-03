@@ -16,12 +16,7 @@ class BookingService
      */
     public function request(BookingForm $form): Response
     {
-        $str = '';
-        foreach ($form as $k => $item) {
-            $item ? $str .= $k . '=' . $item . '&' : $str .= '';
-        }
-
-        $url = '/notifications?' . substr($str,0,-1);
+        $url = '/itineraries/' . $form->itinerary_id;
 
         $client = new Client(['baseUrl' => 'https://test.ean.com/v3']);
         $response = $client->createRequest()

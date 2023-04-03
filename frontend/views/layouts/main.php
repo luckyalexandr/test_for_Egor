@@ -43,6 +43,7 @@ AppAsset::register($this);
         ['label' => 'Manage Booking', 'url' => ['/site/manage-booking']],
         ['label' => 'Booking', 'url' => ['/site/booking']],
         ['label' => 'Shopping', 'url' => ['/site/shopping']],
+        ['label' => 'Geography', 'url' => ['/site/geography']],
     ];
 
     echo Nav::widget([
