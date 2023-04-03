@@ -41,10 +41,9 @@ AppAsset::register($this);
         ['label' => 'Contact', 'url' => ['/site/contact']],
         ['label' => 'Notifications', 'url' => ['/site/notifications']],
         ['label' => 'Manage Booking', 'url' => ['/site/manage-booking']],
+        ['label' => 'Booking', 'url' => ['/site/booking']],
+        ['label' => 'Shopping', 'url' => ['/site/shopping']],
     ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-    }
 
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],

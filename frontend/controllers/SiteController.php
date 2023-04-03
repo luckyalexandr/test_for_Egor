@@ -2,11 +2,13 @@
 
 namespace frontend\controllers;
 
+use frontend\forms\BookingForm;
 use frontend\forms\ContentForm;
 use frontend\forms\ManageBookingForm;
 use frontend\forms\NotificationsForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
+use frontend\services\BookingService;
 use frontend\services\ContentService;
 use frontend\services\ManageBookingService;
 use frontend\services\NotificationsService;
@@ -31,17 +33,20 @@ class SiteController extends Controller
     private $content;
     private $notifications;
     private $manage;
+    private $booking;
 
     public function __construct($id, $module,
                                 ContentService $content,
                                 NotificationsService $notifications,
                                 ManageBookingService $manage,
+                                BookingService $booking,
                                 $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->content = $content;
         $this->notifications = $notifications;
         $this->manage = $manage;
+        $this->booking = $booking;
     }
 
     /**
@@ -135,6 +140,30 @@ class SiteController extends Controller
             return $this->refresh();
         }
         return $this->render('manage-booking', [
+            'model' => $form,
+        ]);
+    }
+
+    /**
+     * Displays booking page.
+     *
+     * @return string|Response
+     * @throws \Exception
+     */
+    public function actionBooking()
+    {
+        $form = new BookingForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->booking->request($form);
+                Yii::$app->session->setFlash('success', 'Success <br>' . $this->booking->request($form));
+            } catch (\Exception $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', 'There was an error sending your request.');
+            }
+            return $this->refresh();
+        }
+        return $this->render('booking', [
             'model' => $form,
         ]);
     }

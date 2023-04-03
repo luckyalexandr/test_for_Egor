@@ -11,7 +11,7 @@ use yii\helpers\Html;
 $this->title = 'Content';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-about">
+<div class="site-content">
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php $form = ActiveForm::begin(['id' => 'content-form']); ?>

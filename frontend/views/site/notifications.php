@@ -13,10 +13,10 @@ use yii\helpers\Html;
 $this->title = 'Notifications';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-about">
+<div class="site-notifications">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(['id' => 'content-form']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'notifications-form']); ?>
 
     <?= $form->field($model, 'undeliverable')->textInput(['autofocus' => true, 'value' => 'false']) ?>
 

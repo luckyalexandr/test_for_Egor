@@ -10,13 +10,13 @@
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = 'Manage Booking';
+$this->title = 'Booking';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-manage-booking">
+<div class="site-booking">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(['id' => 'manage-booking-form']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'booking-form']); ?>
 
     <?= $form->field($model, 'itinerary_id')->textInput(['autofocus' => true, 'value' => '8955599932111']) ?>
 
