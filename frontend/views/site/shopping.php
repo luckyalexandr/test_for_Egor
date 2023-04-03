@@ -10,15 +10,19 @@
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = 'Booking';
+$this->title = 'Shopping';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-booking">
+<div class="site-shopping">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(['id' => 'booking-form']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'shopping-form']); ?>
 
-    <?= $form->field($model, 'itinerary_id')->textInput(['autofocus' => true, 'value' => '8955599932111']) ?>
+    <?= $form->field($model, 'property_id')->textInput(['autofocus' => true, 'value' => '19248']) ?>
+
+    <?= $form->field($model, 'room_id')->textInput(['value' => '123abc']) ?>
+
+    <?= $form->field($model, 'rate_id')->textInput(['value' => '123abc']) ?>
 
     <?= $form->field($model, 'token')->textInput(['value' => 'MY5S3j36cOcLfLBZjPYQ1abhfc8CqmjmFVzkk7euvWaunE57LLeDgaxm516m']) ?>
 
@@ -30,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model->header, 'customer_session_id')->textInput() ?>
 
-    <?= $form->field($model->header, 'customer_ip')->textInput(['value' => '127.0.0.1']) ?>
+    <?= $form->field($model->header, 'customer_ip')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>

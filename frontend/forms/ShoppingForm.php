@@ -8,26 +8,10 @@ namespace frontend\forms;
 
 class ShoppingForm extends CompositeForm
 {
-    public $language;
-    public $brand_id;
-    public $business_model;
-    public $category_id_exclude;
-    public $chain_id;
-    public $country_code;
-    public $date_added_end;
-    public $date_added_start;
-    public $date_updated_end;
-    public $date_updated_start;
-    public $include;
-    public $multi_unit;
     public $property_id;
-    public $property_rating_max;
-    public $property_rating_min;
-    public $supply_source;
-    public $billing_terms;
-    public $partner_point_of_sale;
-    public $payment_terms;
-    public $platform_name;
+    public $room_id;
+    public $rate_id;
+    public $token;
 
     public function __construct($config = [])
     {
@@ -38,11 +22,8 @@ class ShoppingForm extends CompositeForm
     public function rules(): array
     {
         return [
-            [['language', 'brand_id', 'business_model', 'category_id_exclude', 'chain_id', 'country_code', 'include', 'property_id', 'supply_source', 'billing_terms', 'partner_point_of_sale', 'payment_terms', 'platform_name'], 'string'],
-            [['date_added_end', 'date_added_start', 'date_updated_end', 'date_updated_start'], 'date', 'format' => 'Y-mm-dd'],
-            [['language', 'supply_source'], 'required'],
-            [['property_rating_max', 'property_rating_min'], 'double'],
-            [['multi_unit'], 'boolean'],
+            [['property_id', 'room_id', 'rate_id', 'token'], 'string'],
+            [['property_id', 'room_id', 'rate_id', 'token'], 'required'],
         ];
     }
 

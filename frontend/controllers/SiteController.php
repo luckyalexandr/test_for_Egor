@@ -6,12 +6,14 @@ use frontend\forms\BookingForm;
 use frontend\forms\ContentForm;
 use frontend\forms\ManageBookingForm;
 use frontend\forms\NotificationsForm;
+use frontend\forms\ShoppingForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use frontend\services\BookingService;
 use frontend\services\ContentService;
 use frontend\services\ManageBookingService;
 use frontend\services\NotificationsService;
+use frontend\services\ShoppingService;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
@@ -34,12 +36,14 @@ class SiteController extends Controller
     private $notifications;
     private $manage;
     private $booking;
+    private $shopping;
 
     public function __construct($id, $module,
                                 ContentService $content,
                                 NotificationsService $notifications,
                                 ManageBookingService $manage,
                                 BookingService $booking,
+                                ShoppingService $shopping,
                                 $config = [])
     {
         parent::__construct($id, $module, $config);
@@ -47,6 +51,7 @@ class SiteController extends Controller
         $this->notifications = $notifications;
         $this->manage = $manage;
         $this->booking = $booking;
+        $this->shopping = $shopping;
     }
 
     /**
@@ -164,6 +169,30 @@ class SiteController extends Controller
             return $this->refresh();
         }
         return $this->render('booking', [
+            'model' => $form,
+        ]);
+    }
+
+    /**
+     * Displays shopping page.
+     *
+     * @return string|Response
+     * @throws \Exception
+     */
+    public function actionShopping()
+    {
+        $form = new ShoppingForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->shopping->request($form);
+                Yii::$app->session->setFlash('success', 'Success <br>' . $this->shopping->request($form));
+            } catch (\Exception $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', 'There was an error sending your request.');
+            }
+            return $this->refresh();
+        }
+        return $this->render('shopping', [
             'model' => $form,
         ]);
     }
