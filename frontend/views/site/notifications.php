@@ -28,14 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model, 'platform_name')->textInput() ?>
 
-<!--    --><?php //= $form->field($model->header, 'accept')->textInput(['value' => 'application/json']) ?>
-<!---->
-<!--    --><?php //= $form->field($model->header,'accept_encoding')->textInput(['value'=>'gzip']) ?>
-<!---->
-<!--    --><?php //= $form->field($model->header, 'user_agent')->textInput(['value'=>'TravelNow/3.30.112']) ?>
-<!---->
-<!--    --><?php //= $form->field($model->header, 'customer_session_id')->textInput() ?>
-
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
     </div>

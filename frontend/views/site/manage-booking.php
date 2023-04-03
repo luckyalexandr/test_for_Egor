@@ -10,13 +10,13 @@
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
-$this->title = 'About';
+$this->title = 'Manage Booking';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(['id' => 'content-form']); ?>
+    <?php $form = ActiveForm::begin(['id' => 'manage-booking-form']); ?>
 
     <?= $form->field($model, 'itinerary_id')->textInput(['autofocus' => true, 'value' => '8955599932111']) ?>
 
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model->header, 'customer_session_id')->textInput() ?>
 
-    <?= $form->field($model->header, 'customer_ip')->textInput() ?>
+    <?= $form->field($model->header, 'customer_ip')->textInput(['value' => '127.0.0.1']) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Отправить'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>

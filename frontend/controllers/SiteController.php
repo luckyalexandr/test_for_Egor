@@ -3,10 +3,12 @@
 namespace frontend\controllers;
 
 use frontend\forms\ContentForm;
+use frontend\forms\ManageBookingForm;
 use frontend\forms\NotificationsForm;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use frontend\services\ContentService;
+use frontend\services\ManageBookingService;
 use frontend\services\NotificationsService;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -28,15 +30,18 @@ class SiteController extends Controller
 {
     private $content;
     private $notifications;
+    private $manage;
 
     public function __construct($id, $module,
                                 ContentService $content,
                                 NotificationsService $notifications,
+                                ManageBookingService $manage,
                                 $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->content = $content;
         $this->notifications = $notifications;
+        $this->manage = $manage;
     }
 
     /**
@@ -94,11 +99,11 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        $form = new NotificationsForm();
+        $form = new ManageBookingForm();
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
-                $this->notifications->request($form);
-                Yii::$app->session->setFlash('success', 'Success <br>' . $this->notifications->request($form));
+                $this->manage->request($form);
+                Yii::$app->session->setFlash('success', 'Success <br>' . $this->manage->request($form));
             } catch (\Exception $e) {
                 Yii::$app->errorHandler->logException($e);
                 Yii::$app->session->setFlash('error', 'There was an error sending your request.');
@@ -106,6 +111,30 @@ class SiteController extends Controller
             return $this->refresh();
         }
         return $this->render('about', [
+            'model' => $form,
+        ]);
+    }
+
+    /**
+     * Displays manage-booking page.
+     *
+     * @return string|Response
+     * @throws \Exception
+     */
+    public function actionManageBooking()
+    {
+        $form = new ManageBookingForm();
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->manage->request($form);
+                Yii::$app->session->setFlash('success', 'Success <br>' . $this->manage->request($form));
+            } catch (\Exception $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', 'There was an error sending your request.');
+            }
+            return $this->refresh();
+        }
+        return $this->render('manage-booking', [
             'model' => $form,
         ]);
     }

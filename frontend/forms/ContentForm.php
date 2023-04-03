@@ -31,7 +31,7 @@ class ContentForm extends CompositeForm
 
     public function __construct($config = [])
     {
-        $this->header = new HeaderForm();
+        $this->header = new HeaderForm(['scenario' => HeaderForm::SCENARIO_CONTENT]);
         parent::__construct($config);
     }
 
